@@ -10,6 +10,11 @@ pipeline {
 
     environment {
         appVersion = ''
+        ACC_ID = '057260092371'
+        REGION = 'us-east-1'
+        PROJECT = 'roboshop'
+        COMPONENT = 'cataloguee'
+        IMAGE_VERSION = 'v1'
     }
 
     stages {
@@ -33,6 +38,24 @@ pipeline {
                     echo 'Dependencies installed successfully.'
                 }
             }
+        }
+
+         stage('docker build') { // stage to build Docker image
+            steps {
+                script {
+                     withAWS(credentials: 'aws-creds', region: '${REGION}') {
+                           sh """
+                           aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${ACC_ID}.dkr.ecr.${REGION}.amazonaws.com 
+
+                           docker build -t ${PROJECT}/${COMPONENT}:${IMAGE_VERSION} .
+
+                          docker tag ${PROJECT}/${COMPONENT}:${IMAGE_VERSION} ${ACC_ID}.dkr.ecr.${REGION}.amazonaws.com/${PROJECT}/${COMPONENT}:${IMAGE_VERSION}
+
+                          docker push ${ACC_ID}.dkr.ecr.${REGION}.amazonaws.com/${PROJECT}/${COMPONENT}:${IMAGE_VERSION}
+
+                           """
+                        }
+                }
         }
     }
 
