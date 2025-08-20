@@ -54,8 +54,9 @@ pipeline {
                           docker push ${ACC_ID}.dkr.ecr.${REGION}.amazonaws.com/${PROJECT}/${COMPONENT}:${IMAGE_VERSION}
 
                            """
-                        }
+                    }
                 }
+            }
         }
     }
 
