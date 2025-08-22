@@ -30,32 +30,32 @@ pipeline {
         }
 
 
-        //  stage('install dependencies') { // stage to install dependencies
-        //     steps {
-        //         script { // using script block to run a Groovy script
-        //            sh "npm install"
-        //             echo 'Dependencies installed successfully.'
-        //         }
-        //     }
-        // }
+         stage('install dependencies') { // stage to install dependencies
+            steps {
+                script { // using script block to run a Groovy script
+                   sh "npm install"
+                    echo 'Dependencies installed successfully.'
+                }
+            }
+        }
 
-        //  stage('docker build') { // stage to build Docker image
-        //     steps {
-        //         script {
-        //              withAWS(credentials: 'aws-creds', region: '${REGION}') {
-        //                    sh """
-        //                    aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${ACC_ID}.dkr.ecr.${REGION}.amazonaws.com 
+         stage('docker build') { // stage to build Docker image
+            steps {
+                script {
+                     withAWS(credentials: 'aws-creds', region: '${REGION}') {
+                           sh """
+                           aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${ACC_ID}.dkr.ecr.${REGION}.amazonaws.com 
 
-        //                    docker build -t ${PROJECT}/${COMPONENT}:${appVersion} .
+                           docker build -t ${PROJECT}/${COMPONENT}:${appVersion} .
 
-        //                   docker tag ${PROJECT}/${COMPONENT}:${appVersion} ${ACC_ID}.dkr.ecr.${REGION}.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion}
+                          docker tag ${PROJECT}/${COMPONENT}:${appVersion} ${ACC_ID}.dkr.ecr.${REGION}.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion}
 
-        //                   docker push ${ACC_ID}.dkr.ecr.${REGION}.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion}
+                          docker push ${ACC_ID}.dkr.ecr.${REGION}.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion}
 
-        //                    """
-        //             }
-        //         }
-        //     }
-        // }
+                           """
+                    }
+                }
+            }
+        }
     }
 }
