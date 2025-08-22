@@ -45,9 +45,8 @@ pipeline {
                            sh """
                            aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${ACC_ID}.dkr.ecr.${REGION}.amazonaws.com 
 
-                           docker build -t ${PROJECT}/${COMPONENT}:1.0.0 .
+                           docker build -t ${PROJECT}/${COMPONENT}:${appVersion} .
 
-                           echo "aapplication Version: ${appVersion}"
 
                           docker tag ${PROJECT}/${COMPONENT}:${appVersion} ${ACC_ID}.dkr.ecr.${REGION}.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion}
 
