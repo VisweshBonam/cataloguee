@@ -47,6 +47,8 @@ pipeline {
 
                            docker build -t ${PROJECT}/${COMPONENT}:${appVersion} .
 
+                           echo "appVersion=${appVersion}"
+
                           docker tag ${PROJECT}/${COMPONENT}:${appVersion} ${ACC_ID}.dkr.ecr.${REGION}.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion}
 
                           docker push ${ACC_ID}.dkr.ecr.${REGION}.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion}
