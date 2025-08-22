@@ -39,7 +39,7 @@ pipeline {
                 }
             }
         }
-
+        ////docker build stage
          stage('docker build') { // stage to build Docker image
             steps {
                 script {
