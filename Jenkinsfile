@@ -14,7 +14,6 @@ pipeline {
         REGION = 'us-east-1'
         PROJECT = 'roboshop'
         COMPONENT = 'cataloguee'
-        IMAGE_VERSION = 'v1'
     }
 
     stages {
@@ -39,7 +38,7 @@ pipeline {
                 }
             }
         }
-        
+
          stage('docker build') { // stage to build Docker image
             steps {
                 script {
@@ -47,11 +46,11 @@ pipeline {
                            sh """
                            aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${ACC_ID}.dkr.ecr.${REGION}.amazonaws.com 
 
-                           docker build -t ${PROJECT}/${COMPONENT}:${IMAGE_VERSION} .
+                           docker build -t ${PROJECT}/${COMPONENT}:${appVersion} .
 
-                          docker tag ${PROJECT}/${COMPONENT}:${IMAGE_VERSION} ${ACC_ID}.dkr.ecr.${REGION}.amazonaws.com/${PROJECT}/${COMPONENT}:${IMAGE_VERSION}
+                          docker tag ${PROJECT}/${COMPONENT}:${appVersion} ${ACC_ID}.dkr.ecr.${REGION}.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion}
 
-                          docker push ${ACC_ID}.dkr.ecr.${REGION}.amazonaws.com/${PROJECT}/${COMPONENT}:${IMAGE_VERSION}
+                          docker push ${ACC_ID}.dkr.ecr.${REGION}.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion}
 
                            """
                     }
