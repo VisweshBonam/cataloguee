@@ -28,7 +28,6 @@ pipeline {
                 }
             }
         }
-        
 
         //  stage('install dependencies') { // stage to install dependencies
         //     steps {
