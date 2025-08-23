@@ -29,14 +29,14 @@ pipeline {
             }
         }
 
-        //  stage('install dependencies') { // stage to install dependencies
-        //     steps {
-        //         script { // using script block to run a Groovy script
-        //            sh "npm install"
-        //             echo 'Dependencies installed successfully.'
-        //         }
-        //     }
-        // }
+         stage('install dependencies') { // stage to install dependencies
+            steps {
+                script { // using script block to run a Groovy script
+                   sh "npm install"
+                    echo 'Dependencies installed successfully.'
+                }
+            }
+        }
 
         //  stage('docker build') { // stage to build Docker image
         //     steps {
